@@ -17,27 +17,11 @@ except ImportError:
     print >>sys.stderr, "Cython is required to build occmodel"
     sys.exit(1)
 
-try:
-    import geotools
-except ImportError:
-    print >>sys.stderr, "geotools is required to build occmodel"
-    sys.exit(1)
-
-viewer = True
-try:
-    import gltools
-except ImportError:
-    viewer = False
-    
-#sys.argv.append('build_ext')
-#sys.argv.extend(['sdist','--formats=gztar,zip'])
-#sys.argv.append('bdist_wininst')
-
 # create config file
 sys.dont_write_bytecode = True
 import version
 
-CONFIG = 'occmodel/@src/Config.pxi'
+CONFIG = 'occmodel/src/Config.pxi'
 if not os.path.exists(CONFIG) and 'sdist' not in sys.argv:
     with open(CONFIG, 'w') as fh:
         fh.write("__version__ = '%s'\n" % version.STRING)
@@ -62,7 +46,7 @@ if sys.platform == 'win32':
     OBJECTS = [name + '.lib' for name in OCC.split()] + ['occmodel.lib',]
     
 elif sys.platform == 'darwin':
-    SOURCES += glob.glob("occmodel/@src/*.cpp")
+    SOURCES += glob.glob("occmodel/src/*.cpp")
     OCCINCLUDE = '/usr/include/oce'
     OCCLIBS = OCC.split()
     COMPILE_ARGS.append("-fpermissive")
@@ -74,25 +58,26 @@ else:
     COMPILE_ARGS.append("-fpermissive")
 
 EXTENSIONS = [
+    Extension("geotools",
+              sources = ["occmodel/geotools/geotools.pyx",],
+              depends = glob.glob("occmodel/geotools/*.pxi") + \
+              glob.glob("occmodel/geotools/*.pxd") + \
+              glob.glob("occmodel/geotools/*.h"),
+              include_dirs = ['occmodel/geotools/',],
+          ),
     Extension("occmodel",
-        sources = SOURCES,
-        depends = glob.glob("occmodel/@src/*.pxd") + \
-                  glob.glob("occmodel/@src/*.pxi"),
-        include_dirs = ['occmodel/@src', OCCINCLUDE],
-        library_dirs = ['/lib/','occmodel'],
-        libraries = LIBS + OCCLIBS,
-        extra_link_args = LINK_ARGS,
-        extra_compile_args = COMPILE_ARGS,
-        extra_objects = OBJECTS,
-        language="c++"
-    )
+              sources = SOURCES,
+              depends = glob.glob("occmodel/src/*.pxd") + \
+              glob.glob("occmodel/src/*.pxi"),
+              include_dirs = ['occmodel/src', OCCINCLUDE],
+              library_dirs = ['/lib/','occmodel'],
+              libraries = LIBS + OCCLIBS,
+              extra_link_args = LINK_ARGS,
+              extra_compile_args = COMPILE_ARGS,
+              extra_objects = OBJECTS,
+              language="c++"
+          )
 ]
-
-# only build viewer of gltools is available
-if viewer:
-    EXTENSIONS.append(
-        Extension("occmodelviewer", sources = ["occmodel/occmodelviewer.pyx"]),
-    )
 
 classifiers = '''\
 Development Status :: 4 - Beta
