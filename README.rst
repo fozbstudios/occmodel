@@ -15,9 +15,6 @@ It has been repackaged so that it installs easily on Ubuntu 14.04 LTS, no other 
 Install
 ========
 
- * Python 2.7/3.x and Cython 0.17 or later.
- * A working installation of OpenCASCADE (OCE prefered)
-
 On Ubuntu 14.04, install OpenCASCADE with: 
     sudo apt-get install liboce-*
 
