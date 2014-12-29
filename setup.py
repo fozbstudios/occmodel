@@ -3,6 +3,8 @@
 #
 # This file is part of occmodel - See LICENSE.txt
 #
+VERSION = 1,0,0
+
 import sys
 import os
 import glob
@@ -10,23 +12,16 @@ import shutil
 
 from distutils.core import setup
 from distutils.extension import Extension
-
-try:
-    from Cython.Distutils import build_ext
-except ImportError:
-    print >>sys.stderr, "Cython is required to build occmodel"
-    sys.exit(1)
+from Cython.Distutils import build_ext
 
 # create config file
 sys.dont_write_bytecode = True
-import version
 
 CONFIG = 'occmodel/src/Config.pxi'
 if not os.path.exists(CONFIG) and 'sdist' not in sys.argv:
     with open(CONFIG, 'w') as fh:
-        fh.write("__version__ = '%s'\n" % version.STRING)
-        args = version.MAJOR, version.MINOR, version.BUILD
-        fh.write("__version_info__ = (%d,%d,%d)\n" % args)
+        fh.write("__version__ = '%s'\n" % str(VERSION)[1:-1].replace(', ', '.'))
+        fh.write("__version_info__ = (%d,%d,%d)\n" % VERSION)
 
 OCC = \
 '''FWOSPlugin PTKernel TKAdvTools TKBO TKBRep TKBinL TKBool TKCDF TKFeat TKFillet
@@ -91,38 +86,34 @@ Programming Language :: Cython
 Topic :: Scientific/Engineering
 '''
 
-try:
-    setup(
-      name = 'occmodel',
-        version = version.STRING,
-        description = 'Easy access to the OpenCASCADE library',
-        long_description =  \
-'''**occmodel** is a small library which gives a high level access
-to the OpenCASCADE modelling kernel.
+setup(
+    name             = 'occmodel',
+    version          = str(VERSION)[1:-1].replace(', ', '.'),
+    description      = 'Easy access to the OpenCASCADE library',
+    long_description =  \
+    '''**occmodel** is a small library which gives a high level access
+    to the OpenCASCADE modelling kernel.
 
-For most users a direct use of the OpenCASCADE modelling
-kernel can be quite a hurdle as it is a huge library.
+    For most users a direct use of the OpenCASCADE modelling
+    kernel can be quite a hurdle as it is a huge library.
 
-The geometry can be visualized with the included viewer.
-This viewer is utilizing modern OpenGL methods like GLSL
-shaders and vertex buffers to ensure visual quality and
-maximum speed. To use the viewer OpenGL version 2.1 is
-needed.
+    The geometry can be visualized with the included viewer.
+    This viewer is utilizing modern OpenGL methods like GLSL
+    shaders and vertex buffers to ensure visual quality and
+    maximum speed. To use the viewer OpenGL version 2.1 is
+    needed.
 
-In order to complete the installation OpenCASCADE must be installed
-on the system. Check the home page or the README file for details.
-''',
-        classifiers = [value for value in classifiers.split("\n") if value],
-        author='Runar Tenfjord',
-        author_email = 'runar.tenfjord@gmail.com',
-        license = 'GPLv2',
-        download_url='http://pypi.python.org/pypi/occmodel/',
-        url = 'http://github.com/tenko/occmodel',
-        platforms = ['any'],
-        scripts = ['occmodel/occmodeldemo.py'],
-        ext_modules = EXTENSIONS,
-      cmdclass = {'build_ext': build_ext}
-    )
-except:
-    print('Traceback\n:%s\n' % str(sys.exc_info()[-2]))
-    sys.exit(1)
+    In order to complete the installation OpenCASCADE must be installed
+    on the system. Check the home page or the README file for details.
+    ''',
+    classifiers  = [value for value in classifiers.split("\n") if value],
+    author       = 'Runar Tenfjord',
+    author_email = 'runar.tenfjord@gmail.com',
+    license      = 'GPLv2',
+    download_url = 'http://pypi.python.org/pypi/occmodel/',
+    url          = 'http://github.com/tenko/occmodel',
+    platforms    = ['any'],
+    scripts      = ['occmodel/occmodeldemo.py'],
+    ext_modules  = EXTENSIONS,
+    cmdclass     = {'build_ext': build_ext}
+)
