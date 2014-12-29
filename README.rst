@@ -13,12 +13,15 @@ Install
 ========
 
 On Ubuntu 14.04, install OpenCASCADE with: 
+
     sudo apt-get install liboce-*
 
 Then install occmodel with:
+
     sudo pip install git+https://github.com/mikedh/occmodel.git
 
 Or if you want the source on your computer:
+
     git clone https://github.com/mikedh/occmodel.git
     cd occmodel
     sudo python setup.py install
