@@ -23,7 +23,9 @@ Then install occmodel with:
 Or if you want the source on your computer:
 
     git clone https://github.com/mikedh/occmodel.git
+
     cd occmodel
+
     sudo python setup.py install
 
 
