@@ -9,10 +9,25 @@ import sys
 import os
 import glob
 import shutil
+import subprocess
 
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
+
+from distutils.command.build import build as DistutilsBuild
+from distutils.command.build_ext import build_ext as DistutilsBuildExt
+
+
+
+def build_libocc():
+    subprocess.check_call('cd occmodel; make', shell=True)
+
+
+class OCCBuild(DistutilsBuildExt):
+    def run(self):
+        build_libocc()
+        DistutilsBuildExt.run(self)
 
 # create config file
 sys.dont_write_bytecode = True
@@ -62,12 +77,11 @@ EXTENSIONS = [
           ),
     Extension("occmodel",
               sources = SOURCES,
-              depends = glob.glob("occmodel/src/*.pxd") + \
-              glob.glob("occmodel/src/*.pxi"),
-              include_dirs = ['occmodel/src', OCCINCLUDE],
-              library_dirs = ['/lib/','occmodel'],
-              libraries = LIBS + OCCLIBS,
-              extra_link_args = LINK_ARGS,
+              depends = glob.glob("occmodel/src/*.pxd") + glob.glob("occmodel/src/*.pxi"),
+              include_dirs       = ['occmodel/src', OCCINCLUDE],
+              library_dirs       = ['/lib/','occmodel'],
+              libraries          = LIBS + OCCLIBS,
+              extra_link_args    = LINK_ARGS,
               extra_compile_args = COMPILE_ARGS,
               extra_objects = OBJECTS,
               language="c++"
@@ -113,7 +127,6 @@ setup(
     download_url = 'http://pypi.python.org/pypi/occmodel/',
     url          = 'http://github.com/tenko/occmodel',
     platforms    = ['any'],
-    scripts      = ['occmodel/occmodeldemo.py'],
     ext_modules  = EXTENSIONS,
-    cmdclass     = {'build_ext': build_ext}
+    cmdclass     = {'build_ext': OCCBuild}
 )
