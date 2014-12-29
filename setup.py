@@ -3,7 +3,7 @@
 #
 # This file is part of occmodel - See LICENSE.txt
 #
-VERSION = 1,0,0
+VERSION = 1,1,0
 
 import sys
 import os
@@ -15,19 +15,16 @@ from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
-from distutils.command.build import build as DistutilsBuild
-from distutils.command.build_ext import build_ext as DistutilsBuildExt
-
-
+def version_str():
+    return str(VERSION)[1:-1].replace(', ', '.')
 
 def build_libocc():
     subprocess.check_call('cd occmodel; make', shell=True)
 
-
-class OCCBuild(DistutilsBuildExt):
+class OCCBuild(build_ext):
     def run(self):
         build_libocc()
-        DistutilsBuildExt.run(self)
+        build_ext.run(self) 
 
 # create config file
 sys.dont_write_bytecode = True
@@ -35,7 +32,7 @@ sys.dont_write_bytecode = True
 CONFIG = 'occmodel/src/Config.pxi'
 if not os.path.exists(CONFIG) and 'sdist' not in sys.argv:
     with open(CONFIG, 'w') as fh:
-        fh.write("__version__ = '%s'\n" % str(VERSION)[1:-1].replace(', ', '.'))
+        fh.write("__version__ = '%s'\n" % version_str())
         fh.write("__version_info__ = (%d,%d,%d)\n" % VERSION)
 
 OCC = \
@@ -102,7 +99,7 @@ Topic :: Scientific/Engineering
 
 setup(
     name             = 'occmodel',
-    version          = str(VERSION)[1:-1].replace(', ', '.'),
+    version          = version_str(),
     description      = 'Easy access to the OpenCASCADE library',
     long_description =  \
     '''**occmodel** is a small library which gives a high level access

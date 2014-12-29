@@ -14,7 +14,7 @@ LIBSRC = $(wildcard src/*.cpp)
 
 LIBOBJ=$(LIBSRC:.cpp=.o)
 
-.PHONY: pylib docs test tests install clean
+.PHONY: install clean
 
 $(LIB): $(LIBOBJ)
 	@echo lib Makefile - archiving $(LIB)
@@ -25,18 +25,10 @@ $(LIB): $(LIBOBJ)
 	@echo lib Makefile - compiling $<
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-pylib: $(LIB)
-	@echo lib Makefile - building python extension
-	$(PYTHON) setup_build.py build_ext --inplace --force
-
 clean:
 	-rm $(LIBOBJ)
 	-rm $(LIB)
 	-rm -rf build dist
-	-rm -rf occmodel/@docs/build
-	-rm MANIFEST occmodel/@src/Config.pxi
-	-rm occmodel.dll occmodel.so occmodel/occmodel.cpp
-	-rm occmodelviewer.dll occmodelviewer.so occmodel/occmodelviewer.c
 	-find occmodel -iname '*.so' -exec rm {} \;
 	-find occmodel -iname '*.pyc' -exec rm {} \;
 	-find occmodel -iname '*.pyo' -exec rm {} \;

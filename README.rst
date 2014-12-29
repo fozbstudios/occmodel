@@ -2,14 +2,11 @@ Introduction
 ============
 
 occmodel is a small library which gives a high level access
-to the OpenCASCADE modelling kernel.
-
-For most users a direct use of the OpenCASCADE modelling
-kernel can be quite a hurdle as it is a huge library.
+to the OpenCASCADE modelling kernel. For most users direct use of the OpenCASCADE modelling kernel is undesirable as it is large and opaque. 
 
 This is a fork from https://github.com/tenko/occmodel
 
-It has been repackaged so that it installs easily on Ubuntu 14.04 LTS, no other platforms have been or will be tested.
+It has been repackaged and pared down so that it installs easily on Ubuntu 14.04 LTS, no other platforms have been or will be tested. 
 
 
 Install
