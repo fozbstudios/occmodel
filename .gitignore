@@ -1,14 +1,33 @@
 # build folders
+build/
 occmodel/build/
 occmodel/@docs/build/
+
 # compiled python files
 *.pyc
 *.pyo
+
 # python extension modules
 *.pyd
 *.so
+
 # libraries
 *.dll
 *.a
+
 # object files
 *.o
+
+# project files
+.idea
+.ipynb_checkpoints
+*.sublime-project
+*.sublime-workspace
+.cproject
+.project
+.pydevproject
+
+# the following are created by cython:
+occmodel/occmodel.cpp
+occmodel/src/Config.pxi
+occmodel/geotools/geotools.c
