@@ -19,12 +19,20 @@ def version_str():
     return str(VERSION)[1:-1].replace(', ', '.')
 
 def build_libocc():
-    subprocess.check_call('cd occmodel; make clean; make -j8', shell=True)
+    subprocess.check_call('cd occmodel; make -j8', shell=True)
 
 class OCCBuild(build_ext):
     def run(self):
         build_libocc()
         build_ext.run(self) 
+
+def build_libocc_clean():
+    subprocess.check_call('cd occmodel; make clean; make -j8', shell=True)
+
+class OCCBuildClean(build_ext):
+    def run(self):
+        build_libocc_clean()
+        build_ext.run(self)
 
 # create config file
 sys.dont_write_bytecode = True
@@ -50,7 +58,7 @@ OBJECTS, LIBS, LINK_ARGS, COMPILE_ARGS = [],[],[],[]
 OCC_INCLUDE = '/opt/cad-lib/oce-0.17/include/oce'
 OCC_LIB_DIR='/opt/cad-lib/oce-0.17/lib'
 OCC_LIBS = map(lambda s: OCC_LIB_DIR + "/" + s, OCC_LIB_LIST.split())
-LIBS = ["occmodel/occmodel.o"]
+# LIBS = ["occmodel/occmodel.o"]
 OBJECTS = ["occmodel/liboccmodel.a"]
 COMPILE_ARGS.append("-fpermissive")
 
