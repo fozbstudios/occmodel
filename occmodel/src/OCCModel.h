@@ -122,6 +122,7 @@ class OCCBase {
         bool fixShape();
         int toString(std::string *output);
         int fromString(std::string input);
+        PyObject *toVtkActor();
         virtual bool canSetShape(const TopoDS_Shape&) { return true; }
         virtual const TopoDS_Shape& getShape() { return TopoDS_Shape(); }
         virtual void setShape(TopoDS_Shape shape) { ; }
@@ -393,4 +394,8 @@ class OCCSolidIterator {
             }
         }
 };
+
+
+// VTK Tools functions
+PyObject* c_shapeToActor(OCCBase* occShape);
 #endif
