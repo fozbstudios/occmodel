@@ -29,7 +29,7 @@ class OCCBuild(build_ext):
 def build_libocc_clean():
     subprocess.check_call('cd occmodel; make clean; make -j8', shell=True)
 
-class OCCBuildClean(build_ext):
+class OCCBuildAll(build_ext):
     def run(self):
         build_libocc_clean()
         build_ext.run(self)
@@ -70,25 +70,23 @@ EXTENSIONS = [
               glob.glob("occmodel/geotools/*.h"),
               include_dirs = ['occmodel/geotools/',],
           ),
-        Extension("occmodel",
-            sources = SOURCES,
-            depends = glob.glob("occmodel/src/*.pxd") + \
-                      glob.glob("occmodel/src/*.pxi"),
-            include_dirs = ['occmodel/src', OCC_INCLUDE],
-            library_dirs = ['/lib/','occmodel'],
-            libraries = LIBS + OCC_LIBS,
-            extra_link_args = LINK_ARGS,
-            extra_compile_args = COMPILE_ARGS,
-            extra_objects = OBJECTS,
-            language="c++",
-        )
+    Extension("occmodel",
+              sources = SOURCES,
+              depends = glob.glob("occmodel/src/*.pxd") + \
+                        glob.glob("occmodel/src/*.pxi"),
+              include_dirs = ['occmodel/src', OCC_INCLUDE],
+              library_dirs = ['/lib/','occmodel'],
+              libraries = LIBS + OCC_LIBS,
+              extra_link_args = LINK_ARGS,
+              extra_compile_args = COMPILE_ARGS,
+              extra_objects = OBJECTS,
+              language="c++",
+          )
 ]
 
 classifiers = '''\
 Development Status :: 4 - Beta
-Environment :: MacOS X
-Environment :: Win32 (MS Windows)
-Environment :: X11 Applications
+Environment :: Linux
 Intended Audience :: Science/Research
 License :: OSI Approved :: GNU General Public License v2 (GPLv2)
 Operating System :: OS Independent
@@ -107,12 +105,6 @@ setup(
     For most users a direct use of the OpenCASCADE modelling
     kernel can be quite a hurdle as it is a huge library.
 
-    The geometry can be visualized with the included viewer.
-    This viewer is utilizing modern OpenGL methods like GLSL
-    shaders and vertex buffers to ensure visual quality and
-    maximum speed. To use the viewer OpenGL version 2.1 is
-    needed.
-
     In order to complete the installation OpenCASCADE must be installed
     on the system. Check the home page or the README file for details.
     ''',
@@ -120,9 +112,8 @@ setup(
     author       = 'Runar Tenfjord',
     author_email = 'runar.tenfjord@gmail.com',
     license      = 'GPLv2',
-    download_url = 'http://pypi.python.org/pypi/occmodel/',
-    url          = 'http://github.com/tenko/occmodel',
+    url          = 'http://github.com/colonelzentor/occmodel',
     platforms    = ['any'],
     ext_modules  = EXTENSIONS,
-    cmdclass     = {'build_ext': OCCBuild}
+    cmdclass     = {'build_ext': OCCBuild, "build_all": OCCBuildAll}
 )
