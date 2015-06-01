@@ -29,8 +29,8 @@ int OCCBase::transform(DVec mat, OCCBase *target)
             gp_Trsf trans;
 
             trans.SetValues(
-                mat[0], mat[1], mat[2], mat[3], 
-                mat[4], mat[5], mat[6], mat[7], 
+                mat[0], mat[1], mat[2], mat[3],
+                mat[4], mat[5], mat[6], mat[7],
                 mat[8], mat[9], mat[10], mat[11]
             );
             BRepBuilderAPI_Transform aTrans(shape, trans, Standard_True);
@@ -286,4 +286,21 @@ int OCCBase::fromString(std::string input) {
             this->setShape(shape);
     }
     return ret;
+}
+
+PyObject* OCCBase::toVtkActor()
+{
+    TopoDS_Shape shape = this->getShape();
+
+    IVtkOCC_Shape::Handle aShapeImpl = new IVtkOCC_Shape(shape);
+
+    vtkSmartPointer<IVtkTools_ShapeDataSource> DS = vtkSmartPointer<IVtkTools_ShapeDataSource>::New();
+    DS->SetShape(aShapeImpl);
+
+    vtkSmartPointer<vtkPolyDataMapper> Mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    Mapper->SetInputConnection(DS->GetOutputPort());
+    vtkSmartPointer<vtkActor> Actor = vtkSmartPointer<vtkActor>::New();
+    Actor->SetMapper(Mapper);
+
+    return vtkPythonUtil::GetObjectFromPointer(Actor);
 }

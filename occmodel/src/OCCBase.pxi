@@ -356,3 +356,11 @@ cdef class Base:
             raise OCCError(errorMessage)
         
         return self
+
+    cpdef toVtkActor(self):
+        '''
+        Return a vtkActor representation of the shape that can be rendered
+        with VTK.
+        '''
+        cdef c_OCCBase *occ = <c_OCCBase *>self.thisptr
+        return <object>occ.toVtkActor()
