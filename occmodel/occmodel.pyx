@@ -4,6 +4,13 @@
 # See LICENSE.txt for details on conditions.
 include "OCCIncludes.pxi"
 include "Config.pxi"
+include "OCCTools.pxi"
+include "OCCBase.pxi"
+include "OCCVertex.pxi"
+include "OCCEdge.pxi"
+include "OCCWire.pxi"
+include "OCCFace.pxi"
+include "OCCSolid.pxi"
 
 class OCCError(Exception):
     pass
@@ -244,11 +251,3 @@ cdef class Mesh:
         cdef c_OCCMesh *occ = <c_OCCMesh *>self.thisptr
         cdef c_OCCStruct3I t = occ.triangles[index]
         return t.i, t.j, t.k
-            
-include "OCCTools.pxi"
-include "OCCBase.pxi"
-include "OCCVertex.pxi"
-include "OCCEdge.pxi"
-include "OCCWire.pxi"
-include "OCCFace.pxi"
-include "OCCSolid.pxi"

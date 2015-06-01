@@ -447,13 +447,11 @@ OCCMesh *OCCFace::createMesh(double factor, double angle, bool qualityNormals = 
         Standard_Real maxd = fabs(aXmax - aXmin);
         maxd = std::max(maxd, fabs(aYmax - aYmin));
         maxd = std::max(maxd, fabs(aZmax - aZmin));
+
+        BRepMesh_IncrementalMesh MSH(this->getShape(), factor*maxd, Standard_False,
+                angle, Standard_True);
         
-        BRepMesh_FastDiscret MSH(factor*maxd, angle, aBox, Standard_False, Standard_False, 
-                                 Standard_True, Standard_True);
-        
-        MSH.Perform(this->getShape());
-        
-        BRepMesh::Mesh(this->getShape(),factor*maxd);
+        MSH.Perform();
         
         if (this->getShape().ShapeType() != TopAbs_FACE) {
             TopExp_Explorer exFace;

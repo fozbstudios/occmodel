@@ -19,7 +19,7 @@ def version_str():
     return str(VERSION)[1:-1].replace(', ', '.')
 
 def build_libocc():
-    subprocess.check_call('cd occmodel; make', shell=True)
+    subprocess.check_call('cd occmodel; make clean; make -j8', shell=True)
 
 class OCCBuild(build_ext):
     def run(self):
@@ -35,8 +35,8 @@ if not os.path.exists(CONFIG) and 'sdist' not in sys.argv:
         fh.write("__version__ = '%s'\n" % version_str())
         fh.write("__version_info__ = (%d,%d,%d)\n" % VERSION)
 
-OCC = \
-'''FWOSPlugin PTKernel TKAdvTools TKBO TKBRep TKBinL TKBool TKCDF TKFeat TKFillet
+OCC_LIB_LIST = \
+'''FWOSPlugin PTKernel TKBO TKBRep TKBinL TKBool TKCDF TKFeat TKFillet
 TKG2d TKG3d TKGeomAlgo TKGeomBase TKHLR TKIGES TKLCAF TKMath TKMesh TKOffset
 TKPLCAF TKPShape TKPrim TKSTEP TKSTEP209 TKSTEPAttr TKSTEPBase TKSTL TKShHealing
 TKShapeSchema TKStdLSchema TKTObj TKTopAlgo TKXMesh TKXSBase TKXmlL TKernel
@@ -46,23 +46,13 @@ TKShapeSchema TKStdLSchema TKTObj TKTopAlgo TKXMesh TKXSBase TKXmlL TKernel
 SOURCES = ["occmodel/occmodel.pyx"]
 
 OBJECTS, LIBS, LINK_ARGS, COMPILE_ARGS = [],[],[],[]
-if sys.platform == 'win32':
-    COMPILE_ARGS.append('/EHsc')
-    OCCINCLUDE = r"C:\vs9include\oce"
-    OCCLIBS = []
-    OBJECTS = [name + '.lib' for name in OCC.split()] + ['occmodel.lib',]
-    
-elif sys.platform == 'darwin':
-    SOURCES += glob.glob("occmodel/src/*.cpp")
-    OCCINCLUDE = '/usr/include/oce'
-    OCCLIBS = OCC.split()
-    COMPILE_ARGS.append("-fpermissive")
-    
-else:
-    OCCINCLUDE = '/usr/include/oce'
-    OCCLIBS = OCC.split()
-    OBJECTS = ["occmodel/liboccmodel.a"]
-    COMPILE_ARGS.append("-fpermissive")
+
+OCC_INCLUDE = '/opt/cad-lib/oce-0.17/include/oce'
+OCC_LIB_DIR='/opt/cad-lib/oce-0.17/lib'
+OCC_LIBS = map(lambda s: OCC_LIB_DIR + "/" + s, OCC_LIB_LIST.split())
+LIBS = ["occmodel/occmodel.o"]
+OBJECTS = ["occmodel/liboccmodel.a"]
+COMPILE_ARGS.append("-fpermissive")
 
 EXTENSIONS = [
     Extension("geotools",
@@ -72,17 +62,18 @@ EXTENSIONS = [
               glob.glob("occmodel/geotools/*.h"),
               include_dirs = ['occmodel/geotools/',],
           ),
-    Extension("occmodel",
-              sources = SOURCES,
-              depends = glob.glob("occmodel/src/*.pxd") + glob.glob("occmodel/src/*.pxi"),
-              include_dirs       = ['occmodel/src', OCCINCLUDE],
-              library_dirs       = ['/lib/','occmodel'],
-              libraries          = LIBS + OCCLIBS,
-              extra_link_args    = LINK_ARGS,
-              extra_compile_args = COMPILE_ARGS,
-              extra_objects = OBJECTS,
-              language="c++"
-          )
+        Extension("occmodel",
+            sources = SOURCES,
+            depends = glob.glob("occmodel/src/*.pxd") + \
+                      glob.glob("occmodel/src/*.pxi"),
+            include_dirs = ['occmodel/src', OCC_INCLUDE],
+            library_dirs = ['/lib/','occmodel'],
+            libraries = LIBS + OCC_LIBS,
+            extra_link_args = LINK_ARGS,
+            extra_compile_args = COMPILE_ARGS,
+            extra_objects = OBJECTS,
+            language="c++",
+        )
 ]
 
 classifiers = '''\

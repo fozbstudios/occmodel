@@ -8,7 +8,7 @@ PYTHON=python2
 PYVER=2.7
 
 CC=g++
-CFLAGS=-Wall -fPIC -O2 -frtti -fexceptions -Isrc -I/usr/include/oce
+CFLAGS=-Wall -fPIC -O2 -frtti -fexceptions -Isrc -I/opt/cad-lib/oce-0.17/include/oce
 LIB=liboccmodel.a
 LIBSRC = $(wildcard src/*.cpp)
 
