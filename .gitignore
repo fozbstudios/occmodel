@@ -1,3 +1,6 @@
+# install egg-info
+*.egg-info/
+
 # build folders
 build/
 occmodel/build/
