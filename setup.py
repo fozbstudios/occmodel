@@ -14,6 +14,7 @@ import subprocess
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
+# from setuptools import find_packages
 
 def version_str():
     return str(VERSION)[1:-1].replace(', ', '.')
@@ -47,7 +48,7 @@ OCC_LIB_LIST = \
 '''FWOSPlugin PTKernel TKBO TKBRep TKBinL TKBool TKCDF TKFeat TKFillet
 TKG2d TKG3d TKGeomAlgo TKGeomBase TKHLR TKIGES TKLCAF TKMath TKMesh TKOffset
 TKPLCAF TKPShape TKPrim TKSTEP TKSTEP209 TKSTEPAttr TKSTEPBase TKSTL TKShHealing
-TKShapeSchema TKStdLSchema TKTObj TKTopAlgo TKXMesh TKXSBase TKXmlL TKernel
+TKShapeSchema TKStdLSchema TKTObj TKTopAlgo TKXMesh TKXSBase TKXmlL TKernel TKIVtk
 '''
 
 # platform specific settings
@@ -58,6 +59,9 @@ OBJECTS, LIBS, LINK_ARGS, COMPILE_ARGS = [],[],[],[]
 OCC_INCLUDE = '/opt/cad-lib/oce-0.17/include/oce'
 OCC_LIB_DIR='/opt/cad-lib/oce-0.17/lib'
 OCC_LIBS = map(lambda s: OCC_LIB_DIR + "/" + s, OCC_LIB_LIST.split())
+
+VTK_INCLUDE='/opt/cad-lib/vtk-6.2/include/vtk-6.2/'
+
 # LIBS = ["occmodel/occmodel.o"]
 OBJECTS = ["occmodel/liboccmodel.a"]
 COMPILE_ARGS.append("-fpermissive")
@@ -74,7 +78,7 @@ EXTENSIONS = [
               sources = SOURCES,
               depends = glob.glob("occmodel/src/*.pxd") + \
                         glob.glob("occmodel/src/*.pxi"),
-              include_dirs = ['occmodel/src', OCC_INCLUDE],
+              include_dirs = ['occmodel/src', OCC_INCLUDE, VTK_INCLUDE],
               library_dirs = ['/lib/','occmodel'],
               libraries = LIBS + OCC_LIBS,
               extra_link_args = LINK_ARGS,
@@ -115,5 +119,6 @@ setup(
     url          = 'http://github.com/colonelzentor/occmodel',
     platforms    = ['any'],
     ext_modules  = EXTENSIONS,
-    cmdclass     = {'build_ext': OCCBuild, "build_all": OCCBuildAll}
+    cmdclass     = {'build_ext': OCCBuild, "build_all": OCCBuildAll},
+    # packages=['occmodel']
 )
