@@ -48,13 +48,13 @@ Optional Packages:  ``cmake-gui doxygen graphviz-devel``
 #. ``make -j$(nproc)``
 #. ``make install``
 
-To install the python bindings into a virtualenv, activate your desired virtuaenv and run:
+To install the VTK python bindings into a virtualenv, activate your desired virtuaenv and run:
     ``add2virtualenv /opt/cad-lib/vtk-6.2/lib/python2.7/site-packages``
 
 If you want to use this build of VTK as you default VTK package you may also want to do the following things:
-    #. Create a conf file in ``/etc/ld.so.conf.d``
-        ``su -c "echo '/opt/cad-lib/vtk-6.2/lib' >> /etc/ld.so.conf.d/vtk.conf"``
-    #. Simlink the VTK header file directory to ``/usr/include``
+    #. Create a conf file in ``/etc/ld.so.conf.d`` and reconfigure the dynamic linker run-time bindings
+        ``su -c "echo '/opt/cad-lib/vtk-6.2/lib' >> /etc/ld.so.conf.d/vtk.conf; ldconfig"``
+    #. Sym link the VTK header file directory to ``/usr/include``
         ``ln -s /opt/cad-lib/vtk-6.2/include/vtk-6.2 /usr/include``
     #. And in some situations you may need to add VTK libray directory to the ``LD_LIBRARY_PATH`` variable in your ``.bash_profile``.
         ``LD_LIBRARY_PATH=/opt/cad-lib/oce-0.17/lib:$LD_LIBRARY_PATH``
@@ -64,40 +64,45 @@ Building OCE:
 
 OCE Required Packages:  ``cmake gcc-c++ mesa-libGLU-devel freetype-devel tbb-devel``
 
-* If you don't want to build VTK yourself add ``vtk-qt-python`` to the OCE reqired packages list and remove the ``DVTK_DIR:PATH`` setting in the OCE CMake command.
+* If you don't want to build VTK yourself per the instructions above, add ``vtk-qt-python`` to the OCE reqired packages list and remove the ``DVTK_DIR:PATH`` setting in the OCE CMake command.
 
 #. ``git clone https://github.com/tpaviot/oce.git``
 #. ``cd oce; git checkout -b OCE-0.17 tags/OCE-0.17``
 #. ``mkdir build-OCE-0.17; cd build-OCE-0.17``
-#. | ``cmake \``
-   | ``-DOCE_WITH_VTK:BOOL=ON \``
-   | ``-DVTK_DIR:PATH=/opt/cad-lib/vtk-6.2/lib/cmake/vtk-6.2 \``
-   | ``-DOCE_MULTITHREAD_LIBRARY:STRING=TBB \``
-   | ``-DOCE_INSTALL_PREFIX:PATH=/opt/cad-lib/oce-0.17 \``
-   | ``..``
+#. OCE CMake Command:
+    | ``cmake \``
+    | ``-DOCE_WITH_VTK:BOOL=ON \``
+    | ``-DVTK_DIR:PATH=/opt/cad-lib/vtk-6.2/lib/cmake/vtk-6.2 \``
+    | ``-DOCE_MULTITHREAD_LIBRARY:STRING=TBB \``
+    | ``-DOCE_INSTALL_PREFIX:PATH=/opt/cad-lib/oce-0.17 \``
+    | ``..``
 #. ``make -j$(nproc)``
 #. ``make install``
 
 If you want to use this build of OCE as you default OCE package you may also want to do the following things:
-    #. Create a conf file in ``/etc/ld.so.conf.d``
-        ``su -c "echo '/opt/cad-lib/oce-0.17/lib' >> /etc/ld.so.conf.d/oce-0.17.conf"``
-    #. Simlink the oce header file directory to ``/usr/include``
+    #. Create a conf file in ``/etc/ld.so.conf.d`` and reconfigure the dynamic linker run-time bindings
+        ``su -c "echo '/opt/cad-lib/oce-0.17/lib' >> /etc/ld.so.conf.d/oce-0.17.conf; ldconfig"``
+    #. Sym link the oce header file directory to ``/usr/include``
         ``ln -s opt/cad-lib/oce-0.17/include /usr/include``
     #. And in some situations you may need to add the OCE libray directory to the ``LD_LIBRARY_PATH`` variable in your ``.bash_profile``.
         ``LD_LIBRARY_PATH=/opt/cad-lib/oce-0.17/lib:$LD_LIBRARY_PATH``
 
-Then install occmodel with:
+Then install occmodel into the active virtual environment with:
 
     ``pip install git+https://github.com/colonelzentor/occmodel.git``
 
 Or if you want the source on your computer:
 
-    ``git clone https://github.com/mikedh/occmodel.git``
+    ``git clone https://github.com/colonelzentor/occmodel.git``
 
     ``cd occmodel``
 
     ``python setup.py install``
 
+
+Examples
+========
+The examples directory contains several Jupyter notebooks showing the ``occmodel`` API in action. The ``OCCT_Bottle_Example.ipynb`` notebook recreates the OpenCASCADE `bottle tutorial <http://dev.opencascade.org/doc/overview/html/occt__tutorial.html>`_ using ``occmodel`` and displays the result in a VTK rendering window. The ``Step_File_import.ipynb`` notebook demonstrates importing and displaying a STEP file.
 
 Documentation
 =============
