@@ -1,3 +1,5 @@
+from cpython.ref cimport PyObject
+
 cdef extern from *:
     ctypedef char* const_char_ptr "char*"
 
@@ -79,6 +81,7 @@ cdef extern from "OCCModel.h":
         int findPlane(c_OCCStruct3d *origin, c_OCCStruct3d *normal, double tolerance)
         int toString(string *output)
         int fromString(string input)
+        PyObject *toVtkActor()
         
     cdef cppclass c_OCCVertex "OCCVertex":
         c_OCCVertex(double x, double y, double z)
@@ -202,9 +205,16 @@ cdef extern from "OCCModel.h":
         void reset()
         c_OCCSolid *next()
 
+
 cdef extern from "OCCModel.h" namespace "OCCTools":
     int writeBREP(char *filename, vector[c_OCCBase *] shapes)
     int writeSTEP(char *filename, vector[c_OCCBase *] shapes)
     int writeSTL(char *filename, vector[c_OCCBase *] shapes)
     int readBREP(char *filename, vector[c_OCCBase *] shapes)
     int readSTEP(char *filename, vector[c_OCCBase *] shapes)
+
+
+
+# cdef extern from "OCCModel.h" namespace "OCCVtkTools":
+cdef extern from "OCCModel.h":
+    PyObject *c_shapeToActor(c_OCCBase *occShape)
