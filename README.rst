@@ -48,8 +48,10 @@ Optional Packages:  ``cmake-gui doxygen graphviz-devel``
 #. ``make -j$(nproc)``
 #. ``make install``
 
-To install the VTK python bindings into a virtualenv, activate your desired virtuaenv and run:
+To install the VTK python bindings into a virtualenv, activate your desired virtualenv and run:
     ``add2virtualenv /opt/cad-lib/vtk-6.2/lib/python2.7/site-packages``
+Or if you are using [ana|mini]conda:
+    ``conda develop /opt/cad-lib/vtk-6.2/lib/python2.7/site-packages``
 
 If you want to use this build of VTK as you default VTK package you may also want to do the following things:
 
