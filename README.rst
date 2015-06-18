@@ -52,19 +52,20 @@ To install the VTK python bindings into a virtualenv, activate your desired virt
     ``add2virtualenv /opt/cad-lib/vtk-6.2/lib/python2.7/site-packages``
 
 If you want to use this build of VTK as you default VTK package you may also want to do the following things:
-    #. Create a conf file in ``/etc/ld.so.conf.d`` and reconfigure the dynamic linker run-time bindings
-        ``su -c "echo '/opt/cad-lib/vtk-6.2/lib' >> /etc/ld.so.conf.d/vtk.conf; ldconfig"``
-    #. Sym link the VTK header file directory to ``/usr/include``
-        ``ln -s /opt/cad-lib/vtk-6.2/include/vtk-6.2 /usr/include``
-    #. And in some situations you may need to add VTK libray directory to the ``LD_LIBRARY_PATH`` variable in your ``.bash_profile``.
-        ``LD_LIBRARY_PATH=/opt/cad-lib/oce-0.17/lib:$LD_LIBRARY_PATH``
+
+#. Create a conf file in ``/etc/ld.so.conf.d`` and reconfigure the dynamic linker run-time bindings
+    ``su -c "echo '/opt/cad-lib/vtk-6.2/lib' >> /etc/ld.so.conf.d/vtk.conf; ldconfig"``
+#. Sym link the VTK header file directory to ``/usr/include``
+    ``ln -s /opt/cad-lib/vtk-6.2/include/vtk-6.2 /usr/include``
+#. And in some situations you may need to add VTK libray directory to the ``LD_LIBRARY_PATH`` variable in your ``.bash_profile``.
+    ``LD_LIBRARY_PATH=/opt/cad-lib/oce-0.17/lib:$LD_LIBRARY_PATH``
 
 Building OCE:
 -------------
 
 OCE Required Packages:  ``cmake gcc-c++ mesa-libGLU-devel freetype-devel tbb-devel``
 
-* If you don't want to build VTK yourself per the instructions above, add ``vtk-qt-python`` to the OCE reqired packages list and remove the ``DVTK_DIR:PATH`` setting in the OCE CMake command.
+If you don't want to build VTK yourself per the instructions above, add ``vtk-qt-python`` to the OCE reqired packages list and remove the ``DVTK_DIR:PATH`` setting in the OCE CMake command.
 
 #. ``git clone https://github.com/tpaviot/oce.git``
 #. ``cd oce; git checkout -b OCE-0.17 tags/OCE-0.17``
@@ -80,12 +81,13 @@ OCE Required Packages:  ``cmake gcc-c++ mesa-libGLU-devel freetype-devel tbb-dev
 #. ``make install``
 
 If you want to use this build of OCE as you default OCE package you may also want to do the following things:
-    #. Create a conf file in ``/etc/ld.so.conf.d`` and reconfigure the dynamic linker run-time bindings
-        ``su -c "echo '/opt/cad-lib/oce-0.17/lib' >> /etc/ld.so.conf.d/oce-0.17.conf; ldconfig"``
-    #. Sym link the oce header file directory to ``/usr/include``
-        ``ln -s opt/cad-lib/oce-0.17/include /usr/include``
-    #. And in some situations you may need to add the OCE libray directory to the ``LD_LIBRARY_PATH`` variable in your ``.bash_profile``.
-        ``LD_LIBRARY_PATH=/opt/cad-lib/oce-0.17/lib:$LD_LIBRARY_PATH``
+
+#. Create a conf file in ``/etc/ld.so.conf.d`` and reconfigure the dynamic linker run-time bindings
+    ``su -c "echo '/opt/cad-lib/oce-0.17/lib' >> /etc/ld.so.conf.d/oce-0.17.conf; ldconfig"``
+#. Sym link the oce header file directory to ``/usr/include``
+    ``ln -s opt/cad-lib/oce-0.17/include /usr/include``
+#. And in some situations you may need to add the OCE libray directory to the ``LD_LIBRARY_PATH`` variable in your ``.bash_profile``.
+    ``LD_LIBRARY_PATH=/opt/cad-lib/oce-0.17/lib:$LD_LIBRARY_PATH``
 
 Then install occmodel into the active virtual environment with:
 
