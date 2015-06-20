@@ -14,7 +14,6 @@ import subprocess
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
-# from setuptools import find_packages
 
 def version_str():
     return str(VERSION)[1:-1].replace(', ', '.')
@@ -120,5 +119,4 @@ setup(
     platforms    = ['any'],
     ext_modules  = EXTENSIONS,
     cmdclass     = {'build_ext': OCCBuild, "build_all": OCCBuildAll},
-    # packages=['occmodel']
 )
