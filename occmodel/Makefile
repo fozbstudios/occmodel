@@ -28,7 +28,7 @@ $(LIB): $(LIBOBJ)
 clean:
 	-rm $(LIBOBJ)
 	-rm $(LIB)
-	-rm -rf build dist
+	-rm -rf ../build ../dist
 	-rm occmodel.cpp
 	-find geotools -iname 'geotools.c' -exec rm {} \;
 	-find occmodel -iname '*.so' -exec rm {} \;
