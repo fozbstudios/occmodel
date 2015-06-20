@@ -1,4 +1,4 @@
 pyside>=1.2.0
 vtk>=6.0
-occmodel>=0.2
+occmodel>=1.2
 ipython[notebook]>=3.0
