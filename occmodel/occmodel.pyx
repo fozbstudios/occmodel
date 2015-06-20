@@ -11,6 +11,7 @@ include "OCCEdge.pxi"
 include "OCCWire.pxi"
 include "OCCFace.pxi"
 include "OCCSolid.pxi"
+include "OCCVtk.pxi"
 
 class OCCError(Exception):
     pass
