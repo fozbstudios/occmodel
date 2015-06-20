@@ -113,7 +113,7 @@ Note, if you are hacking on occmodel and want a clean build each time you instal
     
     ``python setup.py build_all;  python setup.py install``
 
-``build_all`` executes ``make clean`` and will remove the build directory and any ``.so``, ``.o``, ``.pyo``, ``.pyc`` and ``.pyd`` files create during a previous build process.
+``build_all`` executes ``make clean`` which will remove the build directory and any ``.so``, ``.o``, ``.pyo``, ``.pyc`` and ``.pyd`` files create during a previous build process.
 
 
 Examples
