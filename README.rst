@@ -5,7 +5,9 @@ This repo is a fork of `mikedh/occmodel <https://github.com/mikehd/occmodel>`_ w
 
 Install
 ========
-Since this code is to be built against the most recent version of OCE, you will most likely need to build OCE from source. See below for detailed instructions.  There is also a dependency on VTK, you can either install VTK via yum/apt-get or build it yourself.  I would recommend building it yourself as installing VTK via a package manager pulls along a ton of other packages (at least in Fedora it does) that you most likely don't need at this time.  If and when the conda VTK package is updated to 6.x from 5.10, you will also be able to build OCE against that, in the mean time see below for VTK build instructions.
+Since this code is to be built against the most recent version of OCE, you will most likely need to build OCE from source. See below for detailed instructions.  There is also a dependency on VTK, you can either install VTK via yum/apt-get or build it yourself.  I would recommend building it yourself as installing VTK via a package manager pulls along a ton of other packages (at least in Fedora it does) that you most likely don't need at this time.  If and when the conda VTK package is updated to 6.x from 5.10, you will also be able to build OCE against that, in the meantime see below for VTK build instructions.
+
+The following instructions are only for building and installing on Linux (specifically Fedora). Windows and Mac users will need to adjust as necessary.  I have not tried to build and install VTK, OCE or occmodel on Windows or Mac and have no idea how to go about doing that.
 
 Note, rather than installing OCE and VTK into the the default location (``/usr/local``), I'm using an alternative location (``/opt/cad-lib``) to make it easier to update and/or uninstall if need be.
 
@@ -53,11 +55,11 @@ To install the VTK python bindings into a virtualenv, activate your desired virt
 Or if you are using [ana|mini]conda:
     ``conda develop /opt/cad-lib/vtk-6.2/lib/python2.7/site-packages``
 
-If you want to use this build of VTK as you default VTK package you may also want to do the following things:
+If you want to use this build of VTK as your default VTK package you may also want to do the following things:
 
 #. Create a conf file in ``/etc/ld.so.conf.d`` and reconfigure the dynamic linker run-time bindings
     ``su -c "echo '/opt/cad-lib/vtk-6.2/lib' >> /etc/ld.so.conf.d/vtk.conf; ldconfig"``
-#. Sym link the VTK header file directory to ``/usr/include``
+#. Symlink the VTK header file directory to ``/usr/include``
     ``ln -s /opt/cad-lib/vtk-6.2/include/vtk-6.2 /usr/include``
 #. And in some situations you may need to add VTK libray directory to the ``LD_LIBRARY_PATH`` variable in your ``.bash_profile``.
     ``LD_LIBRARY_PATH=/opt/cad-lib/oce-0.17/lib:$LD_LIBRARY_PATH``
@@ -86,22 +88,32 @@ If you want to use this build of OCE as you default OCE package you may also wan
 
 #. Create a conf file in ``/etc/ld.so.conf.d`` and reconfigure the dynamic linker run-time bindings
     ``su -c "echo '/opt/cad-lib/oce-0.17/lib' >> /etc/ld.so.conf.d/oce-0.17.conf; ldconfig"``
-#. Sym link the oce header file directory to ``/usr/include``
+#. Symlink the oce header file directory to ``/usr/include``
     ``ln -s opt/cad-lib/oce-0.17/include /usr/include``
 #. And in some situations you may need to add the OCE libray directory to the ``LD_LIBRARY_PATH`` variable in your ``.bash_profile``.
     ``LD_LIBRARY_PATH=/opt/cad-lib/oce-0.17/lib:$LD_LIBRARY_PATH``
 
-Then install occmodel into the active virtual environment with:
+
+Building and installing occmodel:
+---------------------------------
+
+To install occmodel into the active virtual environment, simply execute:
 
     ``pip install git+https://github.com/colonelzentor/occmodel.git``
 
-Or if you want the source on your computer:
+Or if you want the source on your computer for additional hacking:
 
     ``git clone https://github.com/colonelzentor/occmodel.git``
 
     ``cd occmodel``
 
     ``python setup.py install``
+
+Note, if you are hacking on occmodel and want a clean build each time you install, run:
+    
+    ``python setup.py build_all;  python setup.py install``
+
+``build_all`` executes ``make clean`` and will remove the build directory and any ``.so``, ``.o``, ``.pyo``, ``.pyc`` and ``.pyd`` files create during a previous build process.
 
 
 Examples
@@ -111,6 +123,8 @@ The examples directory contains several Jupyter notebooks showing the ``occmodel
 Documentation
 =============
 
-See online Sphinx docs_ for docs for `tenko/occmodel <https://github.com/tenko/occmodel>`_.
+See the `tenko/occmodel <https://github.com/tenko/occmodel>`_ Sphinx docs_ for API documentation.  
+
+Currently, the only deviation of this fork from ``tenko/occmodel`` is the addition of ``toVtkActor`` on ``OCCBase`` and the addition of the ``OCCVtk`` package.  The ``OCCVtk`` package only defines one function, ``shapeToActor(Base occShape)``.
 
 .. _docs: http://tenko.github.com/occmodel/index.html
