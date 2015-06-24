@@ -41,7 +41,7 @@ Optional Packages:  ``cmake-gui doxygen graphviz-devel``
     | ``-DCMAKE_INSTALL_PREFIX:PATH=/opt/cad-lib/vtk-6.2 \``
     | ``-DQT_QMAKE_EXECUTABLE:PATH=/usr/bin/qmake-qt5 \``
     | ``-DVTK_Group_Qt:BOOL=ON \``
-    | ``-DCMAKE_PREFIX_PATH:PATH=/usr/lib64/cmake/Qt5WebKitWidgets/Qt5WebKitWidgetsConfig.cmake  \``
+    | ``-DCMAKE_PREFIX_PATH:PATH=/usr/lib64/cmake \``
     | ``-DBUILD_SHARED_LIBS:BOOL=ON \``
     | ``-DCMAKE_BUILD_TYPE:STRING=RELEASE \``
     | ``-DVTK_WRAP_PYTHON:BOOL=ON \``
