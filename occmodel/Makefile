@@ -4,16 +4,22 @@
 # The variable CONDA_ENV_PATH can be modified by
 # passing parameters to make: make CONDA_ENV_PATH=<path to conda env>
 #
+
 CONDA_ENV_PATH=$$(conda info | grep 'default environment' | awk '{print $$4}')
+OCE_INCLUDE_DIR=${CONDA_ENV_PATH}/include/oce
+PYTHON_INCLUDE_DIR=${CONDA_ENV_PATH}/include/python2.7
+VTK_INCLUDE_DIR=${CONDA_ENV_PATH}/include/vtk-6.2
 
 CC=g++
-CFLAGS=-Wall -fPIC -O2 -frtti -fexceptions -Isrc -I${CONDA_ENV_PATH}/include/oce -I${CONDA_ENV_PATH}/include/python2.7 -I${CONDA_ENV_PATH}/include/vtk-6.2
+CFLAGS=-Wall -fPIC -O2 -frtti -fexceptions -Isrc -I${OCE_INCLUDE_DIR} -I${PYTHON_INCLUDE_DIR} -I${VTK_INCLUDE_DIR}
 LIB=liboccmodel.a
 LIBSRC = $(wildcard src/*.cpp)
 
 LIBOBJ=$(LIBSRC:.cpp=.o)
 
 .PHONY: install clean
+
+print-%  : ; @echo $* = $($*)
 
 $(LIB): $(LIBOBJ)
 	@echo lib Makefile - archiving $(LIB)
