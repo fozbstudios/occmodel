@@ -1,10 +1,11 @@
 Introduction
 ============
-
 This repo is a fork of `mikedh/occmodel <https://github.com/mikehd/occmodel>`_ which itself is a fork of `tenko/occmodel <https://github.com/tenko/occmodel>`_.  This project's primary purpose is for upgrading occmodel to the most recent version of `OpenCASCADE Community Edition <https://github.com/tpaviot/oce>`__ (OCE).  In addition it is going be used to explore using cython to wrap the VTK interface package in the 0.17 release of OCE.  `VTK <http://www.vtk.org>`_ provides a superior rendering engine option for OCE topological shapes.
 
 Install
 ========
+Note, if you want to use VTK, OCE and occmdel in a Conda environment you may want to checkout the ``conda-env`` branch and follow the instructions in the ``README.rst`` file, if not read on.
+
 Since this code is to be built against the most recent version of OCE, you will most likely need to build OCE from source. See below for detailed instructions.  There is also a dependency on VTK, you can either install VTK via yum/apt-get or build it yourself.  I would recommend building it yourself as installing VTK via a package manager pulls along a ton of other packages (at least in Fedora it does) that you most likely don't need at this time.  If and when the conda VTK package is updated to 6.x from 5.10, you will also be able to build OCE against that, in the meantime see below for VTK build instructions.
 
 The following instructions are only for building and installing on Linux (specifically Fedora). Windows and Mac users will need to adjust as necessary.  I have not tried to build and install VTK, OCE or occmodel on Windows or Mac and have no idea how to go about doing that.
