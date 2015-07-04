@@ -1,14 +1,13 @@
 #
 # File:  Makefile (for library)
 #
-# The variables 'PYTHON' and 'PYVER' can be modified by
-# passing parameters to make: make PYTHON=python PYVER=2.6
+# The variable CONDA_ENV_PATH can be modified by
+# passing parameters to make: make CONDA_ENV_PATH=<path to conda env>
 #
-PYTHON=python2
-PYVER=2.7
+CONDA_ENV_PATH=$$(conda info | grep 'default environment' | awk '{print $$4}')
 
 CC=g++
-CFLAGS=-Wall -fPIC -O2 -frtti -fexceptions -Isrc -I/opt/cad-lib/oce-0.17/include/oce -I/usr/include/python2.7 -I/opt/cad-lib/vtk-6.2/include/vtk-6.2/
+CFLAGS=-Wall -fPIC -O2 -frtti -fexceptions -Isrc -I${CONDA_ENV_PATH}/include/oce -I${CONDA_ENV_PATH}/include/python2.7 -I${CONDA_ENV_PATH}/include/vtk-6.2
 LIB=liboccmodel.a
 LIBSRC = $(wildcard src/*.cpp)
 
