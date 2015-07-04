@@ -55,13 +55,16 @@ SOURCES = ["occmodel/occmodel.pyx"]
 
 OBJECTS, LIBS, LINK_ARGS, COMPILE_ARGS = [],[],[],[]
 
-OCC_INCLUDE = '/opt/cad-lib/oce-0.17/include/oce'
-OCC_LIB_DIR='/opt/cad-lib/oce-0.17/lib'
+python_interp_path = sys.executable
+conda_env_bin = os.path.split(python_interp_path)[0]
+conda_env_base = conda_env_bin.split('/bin')[0]
+
+OCC_INCLUDE = os.path.join(conda_env_base, 'include', 'oce')
+OCC_LIB_DIR = os.path.join(conda_env_base, 'lib')
 OCC_LIBS = map(lambda s: OCC_LIB_DIR + "/" + s, OCC_LIB_LIST.split())
 
-VTK_INCLUDE='/opt/cad-lib/vtk-6.2/include/vtk-6.2/'
+VTK_INCLUDE = os.path.join(conda_env_base, 'include', 'vtk-6.2/')
 
-# LIBS = ["occmodel/occmodel.o"]
 OBJECTS = ["occmodel/liboccmodel.a"]
 COMPILE_ARGS.append("-fpermissive")
 
