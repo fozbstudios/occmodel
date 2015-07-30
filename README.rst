@@ -123,7 +123,7 @@ The examples directory contains several Jupyter notebooks showing the ``occmodel
 
 The examples directory includes a simple Qt4-based VTK viewer.  To use the viewer you will need to install `PySide <https://pypi.python.org/pypi/PySide>` into the active virtualenv. The following command will build PySide against the system level installed Qt4.
 
-    ``pip install pyside --install-option "--qmake=/usr/bin/qmake-qt4" --install-option "--jobs=8" -v``
+    ``pip install pyside --install-option "--qmake=/usr/bin/qmake-qt4" --install-option "--jobs=$(nproc)" -v``
 
 
 Documentation
