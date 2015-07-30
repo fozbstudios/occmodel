@@ -119,7 +119,12 @@ Note, if you are hacking on occmodel and want a clean build each time you instal
 
 Examples
 ========
-The examples directory contains several Jupyter notebooks showing the ``occmodel`` API in action. The ``OCCT_Bottle_Example.ipynb`` notebook recreates the OpenCASCADE `bottle tutorial <http://dev.opencascade.org/doc/overview/html/occt__tutorial.html>`_ using ``occmodel`` and displays the result in a VTK rendering window. The ``Step_File_import.ipynb`` notebook demonstrates importing and displaying a STEP file.
+The examples directory contains several Jupyter notebooks showing the ``occmodel`` API in action. The ``OCCT_Bottle_Example.ipynb`` notebook recreates the OpenCASCADE `bottle tutorial <http://dev.opencascade.org/doc/overview/html/occt__tutorial.html>`_ using ``occmodel`` and displays the result in a VTK rendering window. The ``Step_File_import.ipynb`` notebook demonstrates importing and displaying a STEP file
+
+The examples directory includes a simple Qt4-based VTK viewer.  To use the viewer you will need to install `PySide <https://pypi.python.org/pypi/PySide>` into the active virtualenv. The following command will build PySide against the system level installed Qt4.
+
+    ``pip install pyside --install-option "--qmake=/usr/bin/qmake-qt4" --install-option "--jobs=8" -v``
+
 
 Documentation
 =============
