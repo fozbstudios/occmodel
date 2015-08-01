@@ -18,6 +18,15 @@ class Ui_MainWindow(object):
  
 
 class SimpleVtkViewer(QtGui.QMainWindow):
+    """
+    SimpleVtkViewer uses a VTK QVTKRenderWindowInteractor to provide interactive
+    rendeirng of VTK props in a QT window.  For keyboard and mouse interaction
+    instructions see https://github.com/Kitware/VTK/blob/master/Wrapping/Python/vtk/qt4/QVTKRenderWindowInteractor.py.
+
+    Note, it seems the 'a' key rather than the 'o' key activates object/actor mode 
+    to enable interactive moving of rendered shapes.
+
+    """
     
     def __init__(self, parent = None):
         QtGui.QMainWindow.__init__(self, parent)
@@ -26,14 +35,43 @@ class SimpleVtkViewer(QtGui.QMainWindow):
         self.ren = vtk.vtkRenderer()
         self.ui.vtkWidget.GetRenderWindow().AddRenderer(self.ren)
         self.iren = self.ui.vtkWidget.GetRenderWindow().GetInteractor()
-        
+
+        self.axes = vtk.vtkAxesActor()
+        self.add_actor(self.axes)
+        self._axes_visible = True
+        self.axes.SetConeRadius(0)
+
         self.show()
         self.iren.Initialize()
 
 
     def add_actor(self, actor):
         self.ren.AddActor(actor)
+        self.iren.Render()
+
+    def hide_actor(self, actor):
+        self.ren.RemoveActor(actor)
+        self.iren.Render()
+
+    def clear_view(self):
+        self.ren.RemoveAllViewProps()
+
+        if self._axes_visible:
+            self.show_axes()
+
+    def show_axes(self):
+        self.add_actor(self.axes)
+        self._axes_visible = True
+
+    def hide_axes(self):
+        self.hide_actor(self.axes)
+        self._axes_visible = False
+
+    def refresh_view(self):
+        self.iren.Render()
         
+
+
 def create_test_actor():
     # Create source
     source = vtk.vtkSphereSource()
