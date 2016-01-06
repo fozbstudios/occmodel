@@ -61,9 +61,11 @@ conda_env_base = conda_env_bin.split('/bin')[0]
 
 OCC_INCLUDE = os.path.join(conda_env_base, 'include', 'oce')
 OCC_LIB_DIR = os.path.join(conda_env_base, 'lib')
-OCC_LIBS = map(lambda s: OCC_LIB_DIR + "/" + s, OCC_LIB_LIST.split())
+OCC_LIBS = list(map(lambda s: OCC_LIB_DIR + "/" + s, OCC_LIB_LIST.split()))
 
-VTK_INCLUDE = os.path.join(conda_env_base, 'include', 'vtk-6.2/')
+VTK_INCLUDE = os.path.join(conda_env_base, 'include', 'vtk-7.0')
+
+print(VTK_INCLUDE)
 
 OBJECTS = ["occmodel/liboccmodel.a"]
 COMPILE_ARGS.append("-fpermissive")
