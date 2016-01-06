@@ -7,8 +7,8 @@
 
 CONDA_ENV_PATH=$$(conda info | grep 'default environment' | awk '{print $$4}')
 OCE_INCLUDE_DIR=${CONDA_ENV_PATH}/include/oce
-PYTHON_INCLUDE_DIR=${CONDA_ENV_PATH}/include/python2.7
-VTK_INCLUDE_DIR=${CONDA_ENV_PATH}/include/vtk-6.2
+PYTHON_INCLUDE_DIR=${CONDA_ENV_PATH}/include/python3.5m
+VTK_INCLUDE_DIR=${CONDA_ENV_PATH}/include/vtk-7.0
 
 CC=g++
 CFLAGS=-Wall -fPIC -O2 -frtti -fexceptions -Isrc -I${OCE_INCLUDE_DIR} -I${PYTHON_INCLUDE_DIR} -I${VTK_INCLUDE_DIR}
