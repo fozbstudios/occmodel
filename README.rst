@@ -5,13 +5,13 @@ This repo is a fork of `mikedh/occmodel <https://github.com/mikehd/occmodel>`_ w
 
 Install into a Conda Environment
 ================================
-The easiest way to install occmodel and it's dependancies into a conda environment is via the conda packages located on `my Anaconda.org channel <https://anaconda.org/colonel_zentor/>`_.  There you will find packages for occmodel, VTK 7.0 and OCE 0.17.1 all built against Python 3.5 and Qt4.  If you are absolutely bent on building occmodel, VTK and OCE from source check out the conda package recipes in this repo for more information.
+The easiest way to install occmodel and it's dependancies into a conda environment is via the conda packages located on `my <https://anaconda.org/colonel_zentor/>`_ Anaconda.org channel .  There you will find packages for occmodel, VTK 7.0 and OCE 0.17.1 all built against Python 3.5 and Qt4.  If you are absolutely bent on building occmodel, VTK and OCE from source check out the conda package recipes in this repo for more information.
 
 Examples
 ========
-The examples directory contains several Jupyter notebooks showing the ``occmodel`` API in action. The ``OCCT_Bottle_Example.ipynb`` notebook recreates the OpenCASCADE `bottle tutorial <http://dev.opencascade.org/doc/overview/html/occt__tutorial.html>`_ using ``occmodel`` and displays the result in a VTK rendering window. The ``Step_File_import.ipynb`` notebook demonstrates importing and displaying a STEP file.
+The examples directory contains several `Jupyter <http://jupyter.org/>`_ notebooks showing the ``occmodel`` API in action. The ``OCCT_Bottle_Example.ipynb`` notebook recreates the OpenCASCADE `bottle tutorial <http://dev.opencascade.org/doc/overview/html/occt__tutorial.html>`_ using ``occmodel`` and displays the result in a VTK rendering window. The ``Step_File_import.ipynb`` notebook demonstrates importing and displaying a STEP file.
 
-The examples directory includes a simple Qt-based VTK viewer.  
+The examples directory includes a simple Qt-based VTK viewer that can be launched from a Jupyter Notebook.  Eventually this will be replaced with a VTK widget but for the time being this will have to suffice.  
 
 Documentation
 =============
