@@ -4,8 +4,7 @@ package:
 
 source:
   git_rev: tags/OCE-0.17.1
-  # git_url: https://github.com/tpaviot/oce.git
-  git_url: /home/devuser/git-local/oce
+  git_url: https://github.com/tpaviot/oce.git
   patches:
     - 0.17.1_vtk7.patch
 

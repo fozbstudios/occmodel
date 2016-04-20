@@ -1,11 +1,10 @@
 package:
   name: occmodel
-  version: 0.2.0
+  version: 1.2.0
 
 source:
-  git_rev: vtk-7.0
-  # git_url: https://github.com/colonelzentor/occmodel.git
-  git_url: /home/devuser/git/cad-repos/occmodel
+  git_rev: conda-env
+  git_url: https://github.com/colonelzentor/occmodel.git
 
 requirements:
   build:
@@ -24,4 +23,4 @@ build:
 about:
   home: https://github.com/colonelzentor/occmodel
   license: GPLv2
-  summary: occmodel is a small library which gives a high level access to the OpenCASCADE modelling kernel. This conda package builds occmodel against VTK 7.0, OCE 0.17.1, Qt4 and Python 3.5.
+  summary: occmodel is a small library which gives a high level access to the OpenCASCADE modeling kernel. This conda package builds occmodel against VTK 7.0, OCE 0.17.1, Qt4 and Python 3.5.
