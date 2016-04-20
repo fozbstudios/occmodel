@@ -1,0 +1,55 @@
+From 554e577c98b705c0056a14c0be7e4b5da6f8a17b Mon Sep 17 00:00:00 2001
+From: Jack Zentner <jack.zentner@gmail.com>
+Date: Wed, 13 Apr 2016 18:24:44 -0400
+Subject: [PATCH] fixed for VTK 7.0
+
+---
+ src/IVtkTools/IVtkTools_ShapePicker.hxx | 2 ++
+ src/IVtkVTK/IVtkVTK_View.cxx            | 4 ++--
+ src/IVtkVTK/IVtkVTK_View.hxx            | 2 ++
+ 3 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/src/IVtkTools/IVtkTools_ShapePicker.hxx b/src/IVtkTools/IVtkTools_ShapePicker.hxx
+index 282212d..278e149 100644
+--- src/IVtkTools/IVtkTools_ShapePicker.hxx
++++ src/IVtkTools/IVtkTools_ShapePicker.hxx
+@@ -16,6 +16,8 @@
+ #ifndef __IVTKTOOLS_SHAPEPICKER_H__
+ #define __IVTKTOOLS_SHAPEPICKER_H__
+ 
++#define vtkFloatingPointType double
++
+ #include <IVtkTools.hxx>
+ #include <IVtk_Types.hxx>
+ #include <IVtkOCC_ShapePickerAlgo.hxx>
+diff --git a/src/IVtkVTK/IVtkVTK_View.cxx b/src/IVtkVTK/IVtkVTK_View.cxx
+index e7db1cf..de2d83c 100644
+--- src/IVtkVTK/IVtkVTK_View.cxx
++++ src/IVtkVTK/IVtkVTK_View.cxx
+@@ -24,8 +24,8 @@
+ // Since VTK 6 the factory methods require "auto-initialization" depending on
+ // what modules are enabled at VTK configure time.
+ // Some defines are needed in order to make the factories work properly.
+-VTK_MODULE_INIT(vtkRenderingOpenGL);
+-VTK_MODULE_INIT(vtkInteractionStyle);
++// VTK_MODULE_INIT(vtkRenderingOpenGL);
++// VTK_MODULE_INIT(vtkInteractionStyle);
+ 
+ // Handle implementation
+ IMPLEMENT_STANDARD_HANDLE(IVtkVTK_View, IVtk_IView)
+diff --git a/src/IVtkVTK/IVtkVTK_View.hxx b/src/IVtkVTK/IVtkVTK_View.hxx
+index b66af7f..35d066e 100644
+--- src/IVtkVTK/IVtkVTK_View.hxx
++++ src/IVtkVTK/IVtkVTK_View.hxx
+@@ -16,6 +16,8 @@
+ #ifndef __IVTKVTK_VIEW_H__
+ #define __IVTKVTK_VIEW_H__
+ 
++#define vtkFloatingPointType double
++
+ #include <IVtk_IView.hxx>
+ 
+ class vtkRenderer;
+-- 
+2.5.5
+

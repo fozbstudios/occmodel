@@ -1,0 +1,26 @@
+package:
+  name: oce
+  version: 0.17.1
+
+source:
+  git_rev: tags/OCE-0.17.1
+  git_url: https://github.com/tpaviot/oce.git
+  patches:
+    - 0.17.1_vtk7.patch
+
+requirements:
+  build:
+    - cmake
+    - python
+    - vtk
+  run:
+    - python
+    - vtk
+
+build:
+  number: 0
+
+about:
+  home: https://github.com/tpaviot/oce
+  license: LGPL2
+  summary: OpenCASCADE Community Edition. This conda package builds OCE against VTK 7.0, Python 3.5 and Qt4.

@@ -19,7 +19,7 @@ def version_str():
     return str(VERSION)[1:-1].replace(', ', '.')
 
 def build_libocc():
-    subprocess.check_call('cd occmodel; make -j8', shell=True)
+    subprocess.check_call('cd occmodel; make -j4', shell=True)
 
 class OCCBuild(build_ext):
     def run(self):
@@ -27,7 +27,7 @@ class OCCBuild(build_ext):
         build_ext.run(self) 
 
 def build_libocc_clean():
-    subprocess.check_call('cd occmodel; make clean; make -j8', shell=True)
+    subprocess.check_call('cd occmodel; make clean; make -j4', shell=True)
 
 class OCCBuildAll(build_ext):
     def run(self):
@@ -55,13 +55,17 @@ SOURCES = ["occmodel/occmodel.pyx"]
 
 OBJECTS, LIBS, LINK_ARGS, COMPILE_ARGS = [],[],[],[]
 
-OCC_INCLUDE = '/opt/cad-lib/oce-0.17/include/oce'
-OCC_LIB_DIR='/opt/cad-lib/oce-0.17/lib'
-OCC_LIBS = map(lambda s: OCC_LIB_DIR + "/" + s, OCC_LIB_LIST.split())
+python_interp_path = sys.executable
+conda_env_bin = os.path.split(python_interp_path)[0]
+conda_env_base = conda_env_bin.split('/bin')[0]
 
-VTK_INCLUDE='/opt/cad-lib/vtk-6.2/include/vtk-6.2/'
+# If the oce or vtk include paths change, don't forget to update the Makefile...lame
+OCC_INCLUDE = os.path.join(conda_env_base, 'include', 'oce')
+VTK_INCLUDE = os.path.join(conda_env_base, 'include', 'vtk-7.0')
 
-# LIBS = ["occmodel/occmodel.o"]
+OCC_LIB_DIR = os.path.join(conda_env_base, 'lib')
+OCC_LIBS = list(map(lambda s: OCC_LIB_DIR + "/" + s, OCC_LIB_LIST.split()))
+
 OBJECTS = ["occmodel/liboccmodel.a"]
 COMPILE_ARGS.append("-fpermissive")
 
