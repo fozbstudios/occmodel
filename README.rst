@@ -9,8 +9,8 @@ The easiest way to install occmodel and it's dependancies into a conda environme
 
 Note, VTK and OCE both need the following packages installed at the system level in order to work correctly.  Installation via dnf|yum|apt-get is necessary because there are currently not conda equivalent packages.
 
-    fedora|redhat|centos: mesa-libGLU libXmu tbb
-    ubuntu|debian: libglu1-mesa libxmu libtbb
+    | fedora|redhat|centos: mesa-libGLU libXmu tbb 
+    | ubuntu|debian: libglu1-mesa libxmu libtbb 
 
 Examples
 ========
