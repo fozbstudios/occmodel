@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # assumes you have 
-#    fedora/redhat/centos:  gcc-c++ mesa-libGLU-devel libXmu-devel tbb-devel 
-#    ubuntu/debian: g++ libglu1-mesa-dev libxmu-dev libtbb-dev
+#    fedora/redhat/centos:  gcc-c++ mesa-libGLU-devel libXmu-devel tbb-devel libXrender-devel
+#    ubuntu/debian: g++ libglu1-mesa-dev libxmu-dev libtbb-dev libxrender1-dev
 # installed a the system level as there are not conda equivalents for these packages.
 
 mkdir build; cd build
