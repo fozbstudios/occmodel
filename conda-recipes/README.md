@@ -11,4 +11,8 @@ To build a given recipe, simply type:
 
     conda build <recipe directory>
 
-See [Conda Docs >> Building packages](http://conda.pydata.org/docs/building/build.html) for information on how to make a recipe, or just look at the plethora of examples on the [conda-recipes](https://github.com/conda/conda-recipes) github page.
+If you then want to install from the local build:
+
+    conda install --use-local <recipe package>
+
+See [Conda Docs >> Building packages](http://conda.pydata.org/docs/building/build.html) for information on how to make, build and install a recipe, or just look at the plethora of examples on the [conda-recipes](https://github.com/conda/conda-recipes) github page.
